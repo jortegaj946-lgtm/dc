@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diseñador Visual — GitHub Pages Ready</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Fabric.js (CDN). Si falla, se mostrará un aviso visible en la página para guiar al usuario -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.5/heatmap.min.js"></script>
+</head>
+<body>
+  <div id="error-banner" class="hidden"></div>
+  <header class="topbar">
+    <div class="brand">
+      <img src="logo.svg" alt="logo" class="logo" />
+      <h1>Diseñador Visual</h1>
+    </div>
+    <nav class="nav">
+      <a href="index.html" class="active">Inicio</a>
+      <a href="projects.html">Proyectos</a>
+      <a href="resume.html">Características</a>
+      <a href="contact.html">Contacto</a>
+      <a class="btn" href="#editor">Ir al editor</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h2>Crea diseños hermosos en minutos — sin experiencia</h2>
+        <p>Publicaciones, presentaciones, flyers, portadas, vídeos cortos y logos. Editor simple, plantillas y exportación.</p>
+        <a class="cta" href="#editor">Comenzar gratis</a>
+      </div>
+      <div class="heatmap-demo">
+        <h3>Mapa de calor (demo)</h3>
+        <div id="heatmapContainer" class="heatmap-box"></div>
+        <p class="muted">Mapa de calor de interacción simulado (demo). En producción conectarías datos reales.</p>
+      </div>
+    </section>
+
+    <section id="editor" class="editor-section">
+      <h3>Editor visual — MVP</h3>
+      <div class="editor-grid">
+        <aside class="panel">
+          <button id="addText">+ Añadir texto</button>
+          <label class="filebtn">Subir imagen<input type="file" id="imgLoader" accept="image/*" /></label>
+          <button id="bringForward">Traer adelante</button>
+          <button id="sendBack">Enviar atrás</button>
+          <button id="delete">Eliminar</button>
+          <div class="sep"></div>
+          <button id="undoBtn">Deshacer</button>
+          <button id="redoBtn">Rehacer</button>
+          <div class="sep"></div>
+          <button id="savePNG">Exportar PNG</button>
+          <button id="saveJSON">Guardar proyecto (JSON)</button>
+          <button id="loadJSON">Cargar proyecto</button>
+          <input type="file" id="loadFile" accept=".json" style="display:none;" />
+        </aside>
+
+        <div class="canvas-wrap">
+          <canvas id="c" width="1000" height="700"></canvas>
+        </div>
+
+        <aside class="right-panel">
+          <h4>Propiedades</h4>
+          <label>Color: <input type="color" id="fillColor" value="#000000" /></label>
+          <label>Tamaño fuente: <input type="number" id="fontSize" value="40" min="8" max="240" /></label>
+          <label>Opacidad: <input type="range" id="opacity" min="0" max="1" step="0.01" value="1" /></label>
+          <div class="sep"></div>
+          <h4>Plantillas</h4>
+          <button class="tpl" data-url="sample_template.svg">Cargar plantilla ejemplo</button>
+        </aside>
+      </div>
+    </section>
+
+    <section class="features">
+      <h3>Exporta y comparte</h3>
+      <p>Descarga PNG/JPG/PDF (PDF mediante impresión o funcionalidades backend), guarda proyectos y desarrolla tu marca.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© Diseñador Visual — MVP · Listo para GitHub Pages</p>
+  </footer>
+
+  <script src="heatmap-init.js"></script>
+  <script src="editor.js"></script>
+  <script>
+    // Comprobaciones rápidas para ayudar cuando el sitio se despliega
+    function showError(msg){
+      const el = document.getElementById('error-banner');
+      el.className = '';
+      el.innerHTML = '<strong>Atención:</strong> ' + msg + '<br/><small>Revisa la consola del navegador para más detalles.</small>';
+    }
+    document.addEventListener('DOMContentLoaded', function(){
+      // comprueba que Fabric.js está disponible
+      if(typeof fabric === 'undefined'){
+        showError('Fabric.js no cargó. Asegúrate de estar en línea o usa el repositorio tal cual. Si trabajas en GitHub Pages, espera unos minutos y refresca. Si el problema persiste, revisa la consola para ver errores de carga (404/CSP).');
+      }
+      if(typeof h337 === 'undefined'){
+        showError('heatmap.js no cargó. El mapa de calor seguirá sin mostrarse correctamente.');
+      }
+    });
+  </script>
+</body>
+</html>
