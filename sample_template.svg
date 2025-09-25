@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">
+  <rect width="100%" height="100%" fill="#fef3c7"/>
+  <rect x="80" y="80" width="450" height="300" fill="#fff" stroke="#e5e7eb" rx="12"/>
+  <text x="560" y="180" font-family="Arial" font-size="42" fill="#111">Plantilla demo — Título</text>
+  <text x="560" y="230" font-family="Arial" font-size="20" fill="#374151">Subtítulo y descripción breve.</text>
+  <circle cx="1000" cy="600" r="80" fill="#2563eb" />
+</svg>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Proyectos — Diseñador Visual</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><img src="assets/logo.svg" alt="logo" class="logo" /><h1>Diseñador Visual</h1></div>
+  <nav class="nav">
+    <a href="index.html">Inicio</a>
+    <a href="projects.html" class="active">Proyectos</a>
+    <a href="resume.html">Características</a>
+    <a href="contact.html">Contacto</a>
+  </nav>
+</header>
+<main class="page">
+  <h2>Tus proyectos</h2>
+  <p>Lista demo de proyectos guardados localmente (MVP). En producción vendría conexión a la nube.</p>
+  <div id="projectsList"></div>
+</main>
+<script>
+(function(){
+  const list = document.getElementById('projectsList');
+  const data = localStorage.getItem('saved_projects');
+  if(!data){ list.innerHTML = '<p>No hay proyectos guardados (demo)</p>'; return;}
+  try{
+    const arr = JSON.parse(data);
+    arr.forEach((p, i)=>{
+      const d = document.createElement('div');
+      d.className='proj';
+      d.innerHTML = '<strong>Proyecto '+(i+1)+'</strong> - <button onclick="download('+i+')">Descargar JSON</button>';
+      list.appendChild(d);
+    });
+    window.download = function(i){
+      const blob = new Blob([JSON.stringify(arr[i])], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'project_'+(i+1)+'.json';
+      a.click();
+    }
+  }catch(e){ list.innerHTML='<p>Error cargando proyectos</p>';}
+})();
+</script>
+<footer class="footer"><p>© Diseñador Visual — MVP</p></footer>
+</body>
+</html>
