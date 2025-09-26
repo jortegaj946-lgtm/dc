@@ -1,107 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Diseñador Visual — GitHub Pages Ready</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <!-- Fabric.js (CDN). Si falla, se mostrará un aviso visible en la página para guiar al usuario -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.5/heatmap.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>CrearDiseños | Diseña Fácil para Empresas LATAM</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="icon" href="logo.svg" />
 </head>
 <body>
-  <div id="error-banner" class="hidden"></div>
-  <header class="topbar">
-    <div class="brand">
-      <img src="assets/logo.svg" alt="logo" class="logo" />
-      <h1>Diseñador Visual</h1>
-    </div>
-    <nav class="nav">
+  <header class="main-header">
+    <img src="logo.svg" alt="Logo CrearDiseños" class="logo"/>
+    <nav>
       <a href="index.html" class="active">Inicio</a>
       <a href="projects.html">Proyectos</a>
-      <a href="resume.html">Características</a>
+      <a href="resume.html">Perfil</a>
       <a href="contact.html">Contacto</a>
-      <a class="btn" href="#editor">Ir al editor</a>
     </nav>
+    <a href="#planes" class="cta-btn">Ver planes</a>
   </header>
-
   <main>
     <section class="hero">
       <div>
-        <h2>Crea diseños hermosos en minutos — sin experiencia</h2>
-        <p>Publicaciones, presentaciones, flyers, portadas, vídeos cortos y logos. Editor simple, plantillas y exportación.</p>
-        <a class="cta" href="#editor">Comenzar gratis</a>
+        <h1>Plataforma de Diseño Visual para Empresas LATAM</h1>
+        <p>Crea plantillas verticales, personaliza tu marca y potencia tu e-commerce.<br>
+        Generación asistida por IA y plantillas profesionales pensadas para PYMEs.</p>
+        <a href="projects.html" class="cta-btn big">Explorar plantillas</a>
+        <a href="editor.html" class="cta-btn outline">Ir al editor</a>
       </div>
-      <div class="heatmap-demo">
-        <h3>Mapa de calor (demo)</h3>
-        <div id="heatmapContainer" class="heatmap-box"></div>
-        <p class="muted">Mapa de calor de interacción simulado (demo). En producción conectarías datos reales.</p>
-      </div>
+      <img src="sample_template.svg" alt="Demo de plantilla" class="hero-image"/>
     </section>
-
-    <section id="editor" class="editor-section">
-      <h3>Editor visual — MVP</h3>
-      <div class="editor-grid">
-        <aside class="panel">
-          <button id="addText">+ Añadir texto</button>
-          <label class="filebtn">Subir imagen<input type="file" id="imgLoader" accept="image/*" /></label>
-          <button id="bringForward">Traer adelante</button>
-          <button id="sendBack">Enviar atrás</button>
-          <button id="delete">Eliminar</button>
-          <div class="sep"></div>
-          <button id="undoBtn">Deshacer</button>
-          <button id="redoBtn">Rehacer</button>
-          <div class="sep"></div>
-          <button id="savePNG">Exportar PNG</button>
-          <button id="saveJSON">Guardar proyecto (JSON)</button>
-          <button id="loadJSON">Cargar proyecto</button>
-          <input type="file" id="loadFile" accept=".json" style="display:none;" />
-        </aside>
-
-        <div class="canvas-wrap">
-          <canvas id="c" width="1000" height="700"></canvas>
-        </div>
-
-        <aside class="right-panel">
-          <h4>Propiedades</h4>
-          <label>Color: <input type="color" id="fillColor" value="#000000" /></label>
-          <label>Tamaño fuente: <input type="number" id="fontSize" value="40" min="8" max="240" /></label>
-          <label>Opacidad: <input type="range" id="opacity" min="0" max="1" step="0.01" value="1" /></label>
-          <div class="sep"></div>
-          <h4>Plantillas</h4>
-          <button class="tpl" data-url="assets/sample_template.svg">Cargar plantilla ejemplo</button>
-        </aside>
-      </div>
-    </section>
-
     <section class="features">
-      <h3>Exporta y comparte</h3>
-      <p>Descarga PNG/JPG/PDF (PDF mediante impresión o funcionalidades backend), guarda proyectos y desarrolla tu marca.</p>
+      <h2>¿Por qué CrearDiseños?</h2>
+      <div class="feature-grid">
+        <div><span>🎨</span> Plantillas verticales únicas para LATAM</div>
+        <div><span>🛒</span> Integración con e-commerce</div>
+        <div><span>🤖</span> IA para imágenes y plantillas</div>
+        <div><span>🚀</span> Herramientas para tu marca y ventas</div>
+        <div><span>🔒</span> Espacio seguro y colaborativo</div>
+      </div>
+    </section>
+    <section id="planes" class="pricing">
+      <h2>Elige tu plan</h2>
+      <div class="pricing-cards">
+        <div class="plan">
+          <h3>Básico</h3>
+          <span class="price">0 USD</span>
+          <ul>
+            <li>Editor simple</li>
+            <li>1 descarga/día</li>
+            <li>Plantillas gratuitas</li>
+            <li>Soporte básico</li>
+          </ul>
+          <button>Comenzar gratis</button>
+        </div>
+        <div class="plan plan-intermediate">
+          <h3>Intermedio</h3>
+          <span class="price">3 USD</span>
+          <ul>
+            <li>Editor avanzado</li>
+            <li>10 descargas/día</li>
+            <li>Plantillas premium</li>
+            <li>Gestión de marca</li>
+          </ul>
+          <button>Probar 7 días</button>
+        </div>
+        <div class="plan plan-premium">
+          <h3>Premium</h3>
+          <span class="price">6 USD</span>
+          <ul>
+            <li>Descargas ilimitadas</li>
+            <li>Plantillas exclusivas</li>
+            <li>Colaboración en equipo</li>
+            <li>Integración e-commerce</li>
+            <li>Soporte prioritario</li>
+          </ul>
+          <button>Ir a Premium</button>
+        </div>
+      </div>
     </section>
   </main>
-
-  <footer class="footer">
-    <p>© Diseñador Visual — MVP · Listo para GitHub Pages</p>
+  <footer>
+    <p>© 2025 CrearDiseños | <a href="resume.html">Perfil</a> | <a href="contact.html">Contacto</a></p>
   </footer>
-
-  <script src="js/heatmap-init.js"></script>
-  <script src="js/editor.js"></script>
-  <script>
-    // Comprobaciones rápidas para ayudar cuando el sitio se despliega
-    function showError(msg){
-      const el = document.getElementById('error-banner');
-      el.className = '';
-      el.innerHTML = '<strong>Atención:</strong> ' + msg + '<br/><small>Revisa la consola del navegador para más detalles.</small>';
-    }
-    document.addEventListener('DOMContentLoaded', function(){
-      // comprueba que Fabric.js está disponible
-      if(typeof fabric === 'undefined'){
-        showError('Fabric.js no cargó. Asegúrate de estar en línea o usa el repositorio tal cual. Si trabajas en GitHub Pages, espera unos minutos y refresca. Si el problema persiste, revisa la consola para ver errores de carga (404/CSP).');
-      }
-      if(typeof h337 === 'undefined'){
-        showError('heatmap.js no cargó. El mapa de calor seguirá sin mostrarse correctamente.');
-      }
-    });
-  </script>
 </body>
 </html>

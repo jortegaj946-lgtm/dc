@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Editor Visual | CrearDiseños</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <!-- Fabric.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+</head>
+<body>
+  <header class="main-header">
+    <img src="logo.svg" alt="Logo CrearDiseños" class="logo"/>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="editor.html" class="active">Editor</a>
+      <a href="projects.html">Proyectos</a>
+      <a href="resume.html">Perfil</a>
+      <a href="contact.html">Contacto</a>
+    </nav>
+  </header>
+  <main>
+    <section class="editor-wrap">
+      <h2>Editor Visual</h2>
+      <div class="editor-toolbar">
+        <button id="addText">Añadir texto</button>
+        <button id="addRect">Rectángulo</button>
+        <button id="addCircle">Círculo</button>
+        <button id="addLine">Línea</button>
+        <label class="filebtn">
+          Subir imagen<input type="file" id="imgLoader" accept="image/*" style="display:none"/>
+        </label>
+        <button id="undoBtn">Deshacer</button>
+        <button id="redoBtn">Rehacer</button>
+        <button id="deleteBtn">Eliminar</button>
+        <button id="exportPNG">Exportar PNG</button>
+      </div>
+      <div class="editor-canvas">
+        <canvas id="c" width="900" height="600"></canvas>
+      </div>
+      <div style="margin-top:18px; font-size:0.95em; color:#6366f1;">
+        * Consejo: haz click sobre los objetos para editarlos individualmente.
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>© 2025 CrearDiseños | <a href="resume.html">Perfil</a> | <a href="contact.html">Contacto</a></p>
+  </footer>
+  <script src="editor.js"></script>
+</body>
+</html>

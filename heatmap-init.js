@@ -1,4 +1,4 @@
-// heatmap-init.js — crea un heatmap de ejemplo con puntos aleatorios
+// heatmap-init.js — demo de mapa de calor con puntos aleatorios
 document.addEventListener('DOMContentLoaded', function(){
   const container = document.getElementById('heatmapContainer');
   if(!container || typeof h337 === 'undefined') return;

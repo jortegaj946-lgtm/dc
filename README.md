@@ -1,36 +1,21 @@
-# Diseñador Visual — GitHub Pages Ready (MVP)
+# CrearDiseños
 
-Este repositorio contiene un MVP de un editor de diseño visual (estático) listo para publicar en **GitHub Pages**.
+Plataforma web de diseño gráfico para empresas LATAM y PYMEs. Crea plantillas verticales, personaliza tu marca y potencia tu e-commerce con IA. Listo para GitHub Pages.
 
-## Estructura del proyecto
-```
-/ (root)
-  index.html
-  contact.html
-  projects.html
-  resume.html
-  /css/styles.css
-  /js/editor.js
-  /js/heatmap-init.js
-  /assets/logo.svg
-  /assets/sample_template.svg
-  README.md
-  LICENSE
-  .nojekyll
-```
+## Características
 
-## Pasos para publicar en GitHub Pages (rápido)
-1. Crea un repositorio nuevo en GitHub (por ejemplo `designer-mvp`) y sube **todos** los archivos a la rama `main` (asegúrate de que `index.html` quede en la raíz).
-2. Ve a **Settings → Pages** en tu repo.
-3. En "Source" elige la rama `main` y la carpeta `/ (root)`. Guarda.
-4. GitHub tardará unos segundos en generar la página. La URL será `https://<tu-usuario>.github.io/<tu-repo>/`.
-5. Si algo no funciona, abre la consola del navegador (F12) y busca errores 404 (archivos no encontrados) o errores de carga de recursos (CSP).
+- Editor visual, plantillas verticales, integración e-commerce.
+- Demo de planes de suscripción.
+- Responsive: PC, tablet y móvil.
+- Exporta PNG/JPG, proyectos locales.
+- ¡Listo para desplegar en GitHub Pages!
 
-## Nota importante
-- El editor usa **Fabric.js** y **heatmap.js** mediante CDN. Si tu página no carga estas librerías (error 404 o CSP), la interfaz mostrará un banner con instrucciones.
-- Para producción se recomienda:
-  - Subir archivos locales de las librerías o usar un pipeline (npm) para incluir dependencias.
-  - Añadir backend para guardar proyectos en la nube, control de usuarios y pagos.
+## Instalación
 
-## ¿No funciona después de esto?
-Dime el enlace del repo o la URL de GitHub Pages y te reviso los errores concretos (te diré exactamente qué corregir). También puedo generar un README con comandos `git` para desplegar paso a paso.
+1. Descarga el ZIP y súbelo a tu repositorio.
+2. Activa GitHub Pages desde la rama `main` y carpeta `/ (root)`.
+3. Accede a `https://<tu-usuario>.github.io/<tu-repo>/`.
+
+## Licencia
+
+MIT
