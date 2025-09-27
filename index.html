@@ -1,107 +1,149 @@
 <!doctype html>
 <html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Diseñador Visual — GitHub Pages Ready</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <!-- Fabric.js (CDN). Si falla, se mostrará un aviso visible en la página para guiar al usuario -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/heatmap.js/2.0.5/heatmap.min.js"></script>
-</head>
-<body>
-  <div id="error-banner" class="hidden"></div>
-  <header class="topbar">
-    <div class="brand">
-      <img src="assets/logo.svg" alt="logo" class="logo" />
-      <h1>Diseñador Visual</h1>
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>CREARDISEÑOS — Completo</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"></head>
+<body class="min-h-screen bg-gray-100">
+<header class="bg-white shadow p-4 flex justify-between items-center">
+  <h1 class="text-xl font-bold">CREARDISEÑOS</h1>
+  <div id="user-area" class="flex items-center gap-3">
+    <button id="btn-login" class="px-3 py-1 border rounded">Entrar</button>
+    <span id="user-name" class="text-sm hidden"></span>
+  </div>
+</header>
+<main class="p-6 max-w-6xl mx-auto">
+  <section id="templates" class="mb-6">
+    <h2 class="text-2xl font-semibold mb-4">Plantillas</h2>
+    <div id="grid" class="grid grid-cols-3 gap-4"></div>
+  </section>
+  <section id="editor" class="hidden">
+    <div class="flex justify-between items-center mb-4">
+      <button id="back" class="px-3 py-1 border rounded">← Volver</button>
+      <div class="flex gap-2">
+        <button id="save-cloud" class="px-3 py-1 bg-indigo-600 text-white rounded">Guardar</button>
+        <button id="export-png" class="px-3 py-1 bg-green-600 text-white rounded">PNG</button>
+      </div>
     </div>
-    <nav class="nav">
-      <a href="index.html" class="active">Inicio</a>
-      <a href="projects.html">Proyectos</a>
-      <a href="resume.html">Características</a>
-      <a href="contact.html">Contacto</a>
-      <a class="btn" href="#editor">Ir al editor</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div>
-        <h2>Crea diseños hermosos en minutos — sin experiencia</h2>
-        <p>Publicaciones, presentaciones, flyers, portadas, vídeos cortos y logos. Editor simple, plantillas y exportación.</p>
-        <a class="cta" href="#editor">Comenzar gratis</a>
+    <div class="flex gap-4">
+      <aside class="w-72 bg-white p-3 rounded shadow">
+        <button id="add-text" class="w-full mb-2 border px-2 py-1">Añadir texto</button>
+        <input id="image-upload" type="file" accept="image/*" class="mb-2"/>
+        <h4 class="mt-4 font-medium">Versiones</h4>
+        <div id="versions" class="max-h-40 overflow-auto"></div>
+      </aside>
+      <div class="flex-1 flex justify-center items-center bg-white p-4 rounded shadow">
+        <div id="canvas-wrap" class="p-2 bg-gray-50 rounded"><canvas id="canvas"></canvas></div>
       </div>
-      <div class="heatmap-demo">
-        <h3>Mapa de calor (demo)</h3>
-        <div id="heatmapContainer" class="heatmap-box"></div>
-        <p class="muted">Mapa de calor de interacción simulado (demo). En producción conectarías datos reales.</p>
-      </div>
-    </section>
+    </div>
+  </section>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.6.0/fabric.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+// Load template grid dynamically
+const templates = [
+  {id:'social_quote', title:'Cita Inspiradora', src:'assets/templates/social_quote.svg', thumb:'assets/thumbs/social_quote.png', w:1080, h:1080},
+  {id:'marketing_sale', title:'Oferta Especial', src:'assets/templates/marketing_sale.svg', thumb:'assets/thumbs/marketing_sale.png', w:1200, h:1200},
+  {id:'invitation_party', title:'Invitación', src:'assets/templates/invitation_party.svg', thumb:'assets/thumbs/invitation_party.png', w:1200, h:1600},
+  {id:'business_card', title:'Tarjeta Profesional', src:'assets/templates/business_card.svg', thumb:'assets/thumbs/business_card.png', w:1050, h:600},
+  {id:'logo_simple', title:'Logotipo', src:'assets/templates/logo_simple.svg', thumb:'assets/thumbs/logo_simple.png', w:800, h:800},
+  {id:'event_flyer', title:'Evento', src:'assets/templates/event_flyer.svg', thumb:'assets/thumbs/event_flyer.png', w:1240, h:1754},
+  {id:'story_template', title:'Historia', src:'assets/templates/story_template.svg', thumb:'assets/thumbs/story_template.png', w:1080, h:1920},
+  {id:'presentation_cover', title:'Portada', src:'assets/templates/presentation_cover.svg', thumb:'assets/thumbs/presentation_cover.png', w:1920, h:1080},
+  {id:'brochure', title:'Folleto', src:'assets/templates/brochure.svg', thumb:'assets/thumbs/brochure.png', w:850, h:1100},
+  {id:'thankyou_card', title:'Agradecimiento', src:'assets/templates/thankyou_card.svg', thumb:'assets/thumbs/thankyou_card.png', w:800, h:600},
+];
+const grid = document.getElementById('grid');
+templates.forEach(t=> {
+  const card = document.createElement('div'); card.className='bg-white p-3 rounded shadow cursor-pointer';
+  card.innerHTML = `<img src="${t.thumb}" class="w-full h-40 object-cover rounded"/><h3 class="mt-2 font-medium">${t.title}</h3>`;
+  card.onclick = ()=> openEditor(t);
+  grid.appendChild(card);
+});
 
-    <section id="editor" class="editor-section">
-      <h3>Editor visual — MVP</h3>
-      <div class="editor-grid">
-        <aside class="panel">
-          <button id="addText">+ Añadir texto</button>
-          <label class="filebtn">Subir imagen<input type="file" id="imgLoader" accept="image/*" /></label>
-          <button id="bringForward">Traer adelante</button>
-          <button id="sendBack">Enviar atrás</button>
-          <button id="delete">Eliminar</button>
-          <div class="sep"></div>
-          <button id="undoBtn">Deshacer</button>
-          <button id="redoBtn">Rehacer</button>
-          <div class="sep"></div>
-          <button id="savePNG">Exportar PNG</button>
-          <button id="saveJSON">Guardar proyecto (JSON)</button>
-          <button id="loadJSON">Cargar proyecto</button>
-          <input type="file" id="loadFile" accept=".json" style="display:none;" />
-        </aside>
+// Editor with debounce + simple object lock mechanism
+let canvas = null;
+let versions = [];
+let currentProjectId = 'proj-' + Date.now();
+let firebaseConfig = null;
+let saveTimeout = null;
+let localLock = {}; // {objectId: uid}
 
-        <div class="canvas-wrap">
-          <canvas id="c" width="1000" height="700"></canvas>
-        </div>
-
-        <aside class="right-panel">
-          <h4>Propiedades</h4>
-          <label>Color: <input type="color" id="fillColor" value="#000000" /></label>
-          <label>Tamaño fuente: <input type="number" id="fontSize" value="40" min="8" max="240" /></label>
-          <label>Opacidad: <input type="range" id="opacity" min="0" max="1" step="0.01" value="1" /></label>
-          <div class="sep"></div>
-          <h4>Plantillas</h4>
-          <button class="tpl" data-url="assets/sample_template.svg">Cargar plantilla ejemplo</button>
-        </aside>
-      </div>
-    </section>
-
-    <section class="features">
-      <h3>Exporta y comparte</h3>
-      <p>Descarga PNG/JPG/PDF (PDF mediante impresión o funcionalidades backend), guarda proyectos y desarrolla tu marca.</p>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p>© Diseñador Visual — MVP · Listo para GitHub Pages</p>
-  </footer>
-
-  <script src="js/heatmap-init.js"></script>
-  <script src="js/editor.js"></script>
-  <script>
-    // Comprobaciones rápidas para ayudar cuando el sitio se despliega
-    function showError(msg){
-      const el = document.getElementById('error-banner');
-      el.className = '';
-      el.innerHTML = '<strong>Atención:</strong> ' + msg + '<br/><small>Revisa la consola del navegador para más detalles.</small>';
+async function openEditor(t){
+  document.getElementById('templates').classList.add('hidden');
+  document.getElementById('editor').classList.remove('hidden');
+  const canvasEl = document.getElementById('canvas');
+  canvasEl.width = t.w; canvasEl.height = t.h;
+  if (canvas) { canvas.dispose(); canvas = null; }
+  canvas = new fabric.Canvas('canvas', { backgroundColor:'#fff', preserveObjectStacking:true });
+  canvas.setWidth(t.w); canvas.setHeight(t.h);
+  // load SVG
+  const res = await fetch(t.src); const svgText = await res.text();
+  fabric.loadSVGFromString(svgText, function(objects, options) {
+    const obj = fabric.util.groupSVGElements(objects, options);
+    obj.scaleToWidth(t.w * 0.95);
+    // assign stable ids
+    obj._cd_id = obj._cd_id || ('obj-' + Date.now());
+    canvas.add(obj);
+    canvas.renderAll();
+    pushVersion();
+  });
+  // event handlers
+  canvas.on('object:modified', ()=> scheduleSaveDebounced());
+  canvas.on('object:added', ()=> scheduleSaveDebounced());
+  canvas.on('object:removed', ()=> scheduleSaveDebounced());
+  // locking: on mouse down, set lock for object and broadcast
+  canvas.on('mouse:down', function(e){
+    if (e.target && e.target._cd_id) {
+      const id = e.target._cd_id;
+      // set local lock (in a real implementation we'd broadcast to DB)
+      localLock[id] = true;
     }
-    document.addEventListener('DOMContentLoaded', function(){
-      // comprueba que Fabric.js está disponible
-      if(typeof fabric === 'undefined'){
-        showError('Fabric.js no cargó. Asegúrate de estar en línea o usa el repositorio tal cual. Si trabajas en GitHub Pages, espera unos minutos y refresca. Si el problema persiste, revisa la consola para ver errores de carga (404/CSP).');
-      }
-      if(typeof h337 === 'undefined'){
-        showError('heatmap.js no cargó. El mapa de calor seguirá sin mostrarse correctamente.');
-      }
-    });
-  </script>
-</body>
-</html>
+  });
+  canvas.on('mouse:up', function(e){
+    if (e.target && e.target._cd_id) {
+      const id = e.target._cd_id;
+      delete localLock[id];
+    }
+  });
+}
+
+document.getElementById('back').onclick = ()=> { document.getElementById('editor').classList.add('hidden'); document.getElementById('templates').classList.remove('hidden'); if (canvas) canvas.dispose(); canvas=null; }
+
+document.getElementById('add-text').onclick = ()=> { if (!canvas) return; const t = new fabric.IText('Texto', { left:100, top:100, fontSize:40 }); t._cd_id = 'obj-' + Date.now(); canvas.add(t); pushVersion(); scheduleSaveDebounced(); }
+document.getElementById('image-upload').addEventListener('change', e=> { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = ev=> { fabric.Image.fromURL(ev.target.result, img=> { img.scaleToWidth(400); img._cd_id = 'obj-' + Date.now(); canvas.add(img); pushVersion(); scheduleSaveDebounced(); }, { crossOrigin:'anonymous' }); }; r.readAsDataURL(f); });
+
+function pushVersion(){ if (!canvas) return; const snap = JSON.stringify(canvas.toJSON(['selectable','_cd_id'])); versions.push({id:'v-'+Date.now(), snap, at: Date.now()}); renderVersions(); }
+function renderVersions(){ const el = document.getElementById('versions'); el.innerHTML=''; versions.slice().reverse().forEach(v=>{ const d = document.createElement('div'); d.className='p-2 border rounded mb-2'; d.innerHTML = `<div class="text-sm">${new Date(v.at).toLocaleString()}</div><div class="mt-1"><button data-id="${v.id}" class="restore px-2 py-1 bg-blue-600 text-white rounded">Restaurar</button></div>`; el.appendChild(d); }); document.querySelectorAll('.restore').forEach(btn=> btn.onclick = ()=> { const id = btn.dataset.id; const v = versions.find(x=> x.id===id); if (v && canvas) { canvas.loadFromJSON(v.snap, ()=> canvas.renderAll()); } }); }
+
+function scheduleSaveDebounced(){ if (saveTimeout) clearTimeout(saveTimeout); saveTimeout = setTimeout(()=> { performSave(); }, 1200); }
+async function performSave(){ // prepare payload and save to Firebase if configured
+  if (!canvas) return;
+  const payload = { json: canvas.toJSON(['selectable','_cd_id']), updatedAt: Date.now() };
+  // If firebase-config.json exists and Firebase is initialized, save to realtime DB at /realtime/{currentProjectId}
+  if (window.__CD_FIREBASE_READY__) {
+    try { await window.__CD_DB_UPDATE__(currentProjectId, payload); console.log('Saved to Firebase realtime.'); } catch(e){ console.error('Firebase save failed', e); }
+  } else {
+    console.log('Local autosave (no Firebase configured).');
+  }
+  pushVersion();
+}
+
+document.getElementById('export-png').onclick = ()=> { if (!canvas) return; const data = canvas.toDataURL({format:'png'}); const a = document.createElement('a'); a.href = data; a.download='diseño.png'; document.body.appendChild(a); a.click(); a.remove(); }
+
+// Try to fetch firebase-config.json at root and initialize Firebase helpers if present
+fetch('/firebase-config.json').then(r=> { if (!r.ok) throw new Error('no config'); return r.json(); }).then(cfg=> {
+  // initialize lightweight Firebase helpers via compat (loaded dynamically)
+  const script1 = document.createElement('script'); script1.src='https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js'; document.head.appendChild(script1);
+  const script2 = document.createElement('script'); script2.src='https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js'; document.head.appendChild(script2);
+  const script3 = document.createElement('script'); script3.src='https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js'; document.head.appendChild(script3);
+  script3.onload = ()=> {
+    try {
+      window.firebase.initializeApp(cfg);
+      window.__CD_FIREBASE_READY__ = true;
+      window.__CD_DB_UPDATE__ = async (projId, payload) => { return window.firebase.database().ref('realtime/' + projId).set(payload); }
+      console.log('Firebase initialized from firebase-config.json');
+    } catch(e){ console.error(e); }
+  };
+}).catch(()=> console.log('No firebase-config.json found at root.'));
+
+</script></body></html>
